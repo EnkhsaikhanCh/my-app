@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { ArrowLeftFromLine } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   Empty,
@@ -6,27 +9,27 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { ArrowLeftFromLine } from "lucide-react";
-import Link from "next/link";
 
-export default function NotFound() {
+const NOT_FOUND_MESSAGES = {
+  TITLE: "404 - Not Found",
+  DESCRIPTION: "The page you are looking for does not exist.",
+  BUTTON_TEXT: "Go back home",
+} as const;
+
+export default function NotFoundPage() {
   return (
     <Empty className="h-screen">
       <EmptyHeader>
-        <EmptyTitle>404 - Not Found</EmptyTitle>
-        <EmptyDescription>
-          The page you are looking for does not exist.
-        </EmptyDescription>
+        <EmptyTitle>{NOT_FOUND_MESSAGES.TITLE}</EmptyTitle>
+        <EmptyDescription>{NOT_FOUND_MESSAGES.DESCRIPTION}</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <EmptyDescription>
-          <Button variant={"outline"}>
-            <Link href="/" className="flex items-center gap-2">
-              <ArrowLeftFromLine />
-              Go back home
-            </Link>
-          </Button>
-        </EmptyDescription>
+        <Button variant="outline" asChild>
+          <Link href="/" className="flex items-center gap-2">
+            <ArrowLeftFromLine aria-hidden="true" />
+            <span>{NOT_FOUND_MESSAGES.BUTTON_TEXT}</span>
+          </Link>
+        </Button>
       </EmptyContent>
     </Empty>
   );

@@ -1,22 +1,24 @@
-import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
 import Link from "next/link";
 
-export default function Home() {
+import { Button } from "@/components/ui/button";
+import { PageHeader, HeaderNavigation } from "@/components/page-header";
+import { siteConfig } from "@/config/site";
+import { UI_CONSTANTS } from "@/constants/ui";
+
+export default function HomePage() {
   return (
     <>
-      <header className="container mx-auto flex items-center justify-between p-4">
-        <h1>{siteConfig.name}</h1>
-        <nav className="flex items-center gap-2">
-          <Button variant={"outline"} asChild>
+      <PageHeader>
+        <h1 className="text-2xl font-bold tracking-tight">{siteConfig.name}</h1>
+        <HeaderNavigation>
+          <Button variant="outline" asChild>
             <Link href="/dashboard">Dashboard</Link>
           </Button>
-          <ModeToggle />
-        </nav>
-      </header>
-      <main className="container mx-auto p-4">
-        {/* Main content goes here */}
+        </HeaderNavigation>
+      </PageHeader>
+
+      <main className={UI_CONSTANTS.SPACING.CONTAINER}>
+        {/* Main content will be added here */}
       </main>
     </>
   );

@@ -1,4 +1,4 @@
-import { ChevronUp, Home, Settings, User2 } from "lucide-react";
+import { ChevronUp, User2 } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -18,69 +18,77 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { NavHeader } from "./nav-header";
+} from "@/components/ui/dropdown-menu";
+import { NavHeader } from "@/components/nav-header";
+import { MAIN_NAVIGATION_ITEMS } from "@/constants/navigation";
 
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "/dashboard",
-    icon: Home,
-  },
-  {
-    title: "Settings",
-    url: "/dashboard/settings",
-    icon: Settings,
-  },
-];
+interface SidebarNavigationProps {
+  items: typeof MAIN_NAVIGATION_ITEMS;
+}
+
+function SidebarNavigation({ items }: SidebarNavigationProps) {
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>Main</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map(({ title, url, icon: Icon }) => (
+            <SidebarMenuItem key={title}>
+              <SidebarMenuButton asChild>
+                <Link href={url}>
+                  <Icon />
+                  <span>{title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+}
+
+interface UserMenuProps {
+  username?: string;
+}
+
+function UserMenu({ username = "Username" }: UserMenuProps) {
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuButton>
+              <User2 aria-hidden="true" />
+              <span>{username}</span>
+              <ChevronUp className="ml-auto" aria-hidden="true" />
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            side="top"
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+          >
+            <DropdownMenuItem>
+              <span>Sign out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  );
+}
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible={"icon"}>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <NavHeader />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Main</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <SidebarNavigation items={MAIN_NAVIGATION_ITEMS} />
       </SidebarContent>
       <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <User2 /> Username
-                  <ChevronUp className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                side="top"
-                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-              >
-                <DropdownMenuItem>
-                  <span>Sign out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <UserMenu />
       </SidebarFooter>
     </Sidebar>
   );

@@ -1,8 +1,10 @@
+import { PageHeading } from "@/components/page-heading";
+
 export default function SettingsPage() {
   return (
-    <>
-      <h1>Settings</h1>
-      <p>Manage your account settings here.</p>
-    </>
+    <PageHeading
+      title="Settings"
+      description="Manage your account settings here."
+    />
   );
 }

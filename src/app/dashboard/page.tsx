@@ -1,8 +1,5 @@
+import { PageHeading } from "@/components/page-heading";
+
 export default function DashboardPage() {
-  return (
-    <>
-      <h1>Home</h1>
-      <p>Welcome to your dashboard!</p>
-    </>
-  );
+  return <PageHeading title="Home" description="Welcome to your dashboard!" />;
 }

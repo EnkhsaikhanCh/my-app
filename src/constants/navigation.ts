@@ -1,0 +1,21 @@
+import { Home, Settings } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+export interface NavigationItem {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+}
+
+export const MAIN_NAVIGATION_ITEMS: NavigationItem[] = [
+  {
+    title: "Home",
+    url: "/dashboard",
+    icon: Home,
+  },
+  {
+    title: "Settings",
+    url: "/dashboard/settings",
+    icon: Settings,
+  },
+] as const;
