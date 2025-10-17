@@ -5,16 +5,19 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="container mx-auto p-4">
-      <header className="flex items-center justify-between py-4">
+    <>
+      <header className="container mx-auto flex items-center justify-between p-4">
         <h1>{siteConfig.name}</h1>
-        <div className="flex items-center gap-2">
-          <Button variant={"outline"}>
+        <nav className="flex items-center gap-2">
+          <Button variant={"outline"} asChild>
             <Link href="/dashboard">Dashboard</Link>
           </Button>
           <ModeToggle />
-        </div>
+        </nav>
       </header>
-    </main>
+      <main className="container mx-auto p-4">
+        {/* Main content goes here */}
+      </main>
+    </>
   );
 }
