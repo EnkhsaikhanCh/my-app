@@ -74,9 +74,6 @@ export function AppSidebar() {
                 className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
               >
                 <DropdownMenuItem>
-                  <span>Account</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
                   <span>Sign out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

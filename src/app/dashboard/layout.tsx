@@ -33,7 +33,7 @@ export default async function DashboardLayout({
             <ModeToggle />
           </div>
         </header>
-        <main className="p-4">{children}</main>
+        <main className="container mx-auto p-4">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

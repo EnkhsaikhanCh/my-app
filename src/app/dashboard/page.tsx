@@ -1,7 +1,8 @@
 export default function DashboardPage() {
   return (
-    <main className="container mx-auto p-4">
-      <h1>Dashboard</h1>
+    <main>
+      <h1>Home</h1>
+      <p>Welcome to your dashboard!</p>
     </main>
   );
 }
