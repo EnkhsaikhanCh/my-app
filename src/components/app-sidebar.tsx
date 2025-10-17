@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { ChevronUp, User2 } from "lucide-react";
+import { ChevronUpIcon, LogOutIcon, User2Icon } from "lucide-react";
 
 import { NavHeader } from "@/components/nav-header";
 import {
@@ -60,17 +60,18 @@ function UserMenu({ username = "Username" }: UserMenuProps) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton>
-              <User2 aria-hidden="true" />
+              <User2Icon aria-hidden="true" />
               <span>{username}</span>
-              <ChevronUp className="ml-auto" aria-hidden="true" />
+              <ChevronUpIcon className="ml-auto" aria-hidden="true" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             side="top"
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
           >
-            <DropdownMenuItem>
+            <DropdownMenuItem className="flex justify-between">
               <span>Sign out</span>
+              <LogOutIcon />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

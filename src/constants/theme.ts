@@ -1,28 +1,28 @@
-import { MonitorCog, Moon, Sun } from "lucide-react";
+import { MonitorCogIcon, MoonIcon, SunIcon } from "lucide-react";
 
 export type ThemeMode = "light" | "dark" | "system";
 
 export interface ThemeOption {
   label: string;
   value: ThemeMode;
-  icon: typeof Sun | typeof Moon | typeof MonitorCog;
+  icon: typeof SunIcon | typeof MoonIcon | typeof MonitorCogIcon;
 }
 
 export const THEME_OPTIONS: ThemeOption[] = [
   {
     label: "Light",
     value: "light",
-    icon: Sun,
+    icon: SunIcon,
   },
   {
     label: "Dark",
     value: "dark",
-    icon: Moon,
+    icon: MoonIcon,
   },
   {
     label: "System",
     value: "system",
-    icon: MonitorCog,
+    icon: MonitorCogIcon,
   },
 ] as const;
 

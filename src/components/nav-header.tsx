@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { GalleryVerticalEnd } from "lucide-react";
+import { GalleryVerticalEndIcon } from "lucide-react";
 
 import {
   SidebarMenu,
@@ -18,7 +18,7 @@ function NavLogo({ name }: NavLogoProps) {
   return (
     <>
       <div className="bg-sidebar-primary flex aspect-square size-8 items-center justify-center rounded-lg text-white">
-        <GalleryVerticalEnd
+        <GalleryVerticalEndIcon
           className={UI_CONSTANTS.ICON_SIZE.SMALL}
           aria-hidden="true"
         />

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { ArrowLeftFromLine } from "lucide-react";
+import { ArrowLeftFromLineIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,7 +27,7 @@ export default function NotFoundPage() {
       <EmptyContent>
         <Button variant="outline" asChild>
           <Link href="/" className="flex items-center gap-2">
-            <ArrowLeftFromLine aria-hidden="true" />
+            <ArrowLeftFromLineIcon aria-hidden="true" />
             <span>{NOT_FOUND_MESSAGES.BUTTON_TEXT}</span>
           </Link>
         </Button>
