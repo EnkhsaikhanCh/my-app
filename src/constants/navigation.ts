@@ -1,10 +1,9 @@
 import { Home, Settings } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
   url: string;
-  icon: LucideIcon;
+  icon: typeof Home | typeof Settings;
 }
 
 export const MAIN_NAVIGATION_ITEMS: NavigationItem[] = [

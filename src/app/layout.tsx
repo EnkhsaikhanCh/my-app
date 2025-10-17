@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
 import { UI_CONSTANTS } from "@/constants/ui";
+
+import type { Metadata } from "next";
 import "./globals.css";
 
 const geistSans = Geist({

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
 import { PageHeader, HeaderNavigation } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { UI_CONSTANTS } from "@/constants/ui";
 

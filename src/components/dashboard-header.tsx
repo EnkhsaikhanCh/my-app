@@ -1,6 +1,6 @@
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Separator } from "@/components/ui/separator";
 import { ModeToggle } from "@/components/mode-toggle";
+import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { UI_CONSTANTS } from "@/constants/ui";
 
 interface DashboardHeaderNavigationProps {

@@ -1,6 +1,14 @@
-import { ChevronUp, User2 } from "lucide-react";
 import Link from "next/link";
 
+import { ChevronUp, User2 } from "lucide-react";
+
+import { NavHeader } from "@/components/nav-header";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -13,13 +21,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { NavHeader } from "@/components/nav-header";
 import { MAIN_NAVIGATION_ITEMS } from "@/constants/navigation";
 
 interface SidebarNavigationProps {

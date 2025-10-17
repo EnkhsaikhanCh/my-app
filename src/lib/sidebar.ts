@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+
 import { SIDEBAR_CONSTANTS } from "@/constants/ui";
 
 export async function getSidebarDefaultState(): Promise<boolean> {

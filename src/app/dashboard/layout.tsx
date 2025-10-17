@@ -1,8 +1,8 @@
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
-import { getSidebarDefaultState } from "@/lib/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { UI_CONSTANTS } from "@/constants/ui";
+import { getSidebarDefaultState } from "@/lib/sidebar";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
