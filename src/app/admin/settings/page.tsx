@@ -26,7 +26,7 @@ export default function AdminSettingsPage() {
   const [maintenanceMode, setMaintenanceMode] = useState(false);
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-full space-y-10 px-10 pb-10 md:max-w-5xl">
       <PageHeading
         title="Admin Settings"
         description="Configure application settings and preferences"
