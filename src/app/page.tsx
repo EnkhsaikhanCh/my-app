@@ -12,9 +12,7 @@ export default function HomePage() {
         <h1 className="text-2xl font-bold tracking-tight">{siteConfig.name}</h1>
         <HeaderNavigation>
           <Button variant="outline" asChild>
-            <Link href="/dashboard" target="_blank" rel="noopener noreferrer">
-              Dashboard
-            </Link>
+            <Link href="/dashboard">Dashboard</Link>
           </Button>
         </HeaderNavigation>
       </PageHeader>
