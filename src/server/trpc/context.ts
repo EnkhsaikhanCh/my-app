@@ -1,11 +1,11 @@
-import type { NextRequest } from "next/server";
-
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/drizzle";
 
-export async function createContext(req: NextRequest) {
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+
+export async function createContext(opts: FetchCreateContextFnOptions) {
   const session = await auth.api.getSession({
-    headers: req.headers,
+    headers: opts.req.headers,
   });
   return {
     db,
