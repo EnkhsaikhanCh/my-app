@@ -2,10 +2,14 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import { defaultQueryOptions } from "@/lib/query-options";
 import { trpc } from "@/lib/trpc";
 
 export function useTodo() {
-  const todosQuery = useQuery(trpc.todo.getAll.queryOptions());
+  const todosQuery = useQuery({
+    ...trpc.todo.getAll.queryOptions(),
+    ...defaultQueryOptions,
+  });
   const todos = todosQuery.data ?? [];
   const isLoading = todosQuery.isLoading;
 
