@@ -5,12 +5,11 @@ import { type Context } from "./context";
 const t = initTRPC.context<Context>().create();
 
 export const router = t.router;
+
 export const publicProcedure = t.procedure;
 
 export const protectedProcedure = t.procedure.use(
   async ({ ctx, next, path }) => {
-    const start = Date.now();
-
     try {
       if (!ctx.session) {
         throw new TRPCError({
@@ -26,12 +25,6 @@ export const protectedProcedure = t.procedure.use(
           session: ctx.session,
         },
       });
-
-      // ⏱️ Timing log (only in development to avoid noisy prod logs)
-      const durationMs = Date.now() - start;
-      if (process.env.NODE_ENV !== "production") {
-        console.log(`[tRPC] ${path} completed in ${durationMs}ms`);
-      }
 
       return result;
     } catch (error) {
