@@ -5,7 +5,7 @@ export const UI_CONSTANTS = {
     MEDIUM: "size-8",
   },
   SPACING: {
-    CONTAINER: "container mx-auto p-4",
+    CONTAINER: "container mx-auto p-6",
     GAP_SMALL: "gap-2",
   },
   TOASTER: {
