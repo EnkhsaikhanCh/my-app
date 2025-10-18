@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   BarChart3Icon,
   ChevronUpIcon,
+  CircleUserRoundIcon,
   LayoutDashboardIcon,
   LogOutIcon,
   SettingsIcon,
@@ -141,7 +142,7 @@ export function AdminSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href="/dashboard">
-                    <User2Icon />
+                    <CircleUserRoundIcon />
                     <span>User Panel</span>
                   </Link>
                 </SidebarMenuButton>
