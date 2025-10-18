@@ -83,8 +83,8 @@ function UserMenu() {
             <DropdownMenuItem
               className="flex justify-between"
               onClick={async () => {
-                await authClient.signOut(); // серверийн session устгах
-                queryClient.clear(); // бүх trpc / react-query кэш устгах
+                await authClient.signOut(); // Delete server session
+                queryClient.clear(); // Clear all trpc / react-query cache
                 router.push("/"); // Redirect
               }}
             >

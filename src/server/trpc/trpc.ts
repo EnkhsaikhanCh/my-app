@@ -28,7 +28,7 @@ export const protectedProcedure = t.procedure.use(
 
       return result;
     } catch (error) {
-      // 🧱 Error Logging (always log minimal message; verbose stack only in dev)
+      // ⚠️ Error Logging (always log minimal message; verbose stack only in dev)
       const message = error instanceof Error ? error.message : String(error);
       if (process.env.NODE_ENV !== "production") {
         console.error(`[tRPC ERROR] ${path}:`, error);
@@ -40,7 +40,7 @@ export const protectedProcedure = t.procedure.use(
         throw error; // already structured
       }
 
-      // ⚠️ Unexpected error-уудыг unified TRPCError болгож хувиргана
+      // ⚠️ Convert unexpected errors into a unified TRPCError
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Something went wrong",
