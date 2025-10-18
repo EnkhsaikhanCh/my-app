@@ -1,4 +1,4 @@
-import { HomeIcon, SettingsIcon } from "lucide-react";
+import { HomeIcon, LayoutListIcon, SettingsIcon } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -11,6 +11,11 @@ export const MAIN_NAVIGATION_ITEMS: NavigationItem[] = [
     title: "Home",
     url: "/dashboard",
     icon: HomeIcon,
+  },
+  {
+    title: "Todo",
+    url: "/dashboard/todo",
+    icon: LayoutListIcon,
   },
   {
     title: "Settings",
