@@ -7,8 +7,8 @@ import { CheckIcon, EditIcon, Trash2Icon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import type { Todo } from "@/db/schema";
 import { Spinner } from "@/components/ui/spinner";
+import type { Todo } from "@/db/schema";
 
 interface TodoItemProps {
   todo: Todo;
