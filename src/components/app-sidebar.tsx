@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { ChevronUpIcon, LogOutIcon, User2Icon } from "lucide-react";
+import { ChevronUpIcon, LogOutIcon, ShieldIcon, User2Icon } from "lucide-react";
 
 import { NavHeader } from "@/components/nav-header";
 import {
@@ -88,6 +88,23 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarNavigation items={MAIN_NAVIGATION_ITEMS} />
+
+        {/* Admin Access */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Administration</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/admin">
+                    <ShieldIcon />
+                    <span>Admin Panel</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <UserMenu />
