@@ -1,26 +1,23 @@
 "use client";
 
-import type { Todo } from "@/db/schema";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
 import { trpc } from "@/lib/trpc";
 
 export function useTodo() {
-  const utils = trpc.useUtils();
-  const { data: todos = [], isLoading } = trpc.todo.getAll.useQuery() as {
-    data: Todo[];
-    isLoading: boolean;
-  };
+  const todosQuery = useQuery(trpc.todo.getAll.queryOptions());
+  const todos = todosQuery.data ?? [];
+  const isLoading = todosQuery.isLoading;
 
-  const create = trpc.todo.create.useMutation({
-    onSuccess: () => utils.todo.getAll.invalidate(),
-  });
-
-  const toggle = trpc.todo.toggle.useMutation({
-    onSuccess: () => utils.todo.getAll.invalidate(),
-  });
-
-  const remove = trpc.todo.delete.useMutation({
-    onSuccess: () => utils.todo.getAll.invalidate(),
-  });
+  const create = useMutation(
+    trpc.todo.create.mutationOptions({ onSuccess: () => todosQuery.refetch() }),
+  );
+  const toggle = useMutation(
+    trpc.todo.toggle.mutationOptions({ onSuccess: () => todosQuery.refetch() }),
+  );
+  const remove = useMutation(
+    trpc.todo.delete.mutationOptions({ onSuccess: () => todosQuery.refetch() }),
+  );
 
   return { todos, isLoading, create, toggle, remove };
 }

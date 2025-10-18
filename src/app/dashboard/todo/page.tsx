@@ -21,7 +21,11 @@ export default function TodoPage() {
         />
 
         <TodoList
-          todos={todos}
+          todos={todos.map((todo) => ({
+            ...todo,
+            createdAt: new Date(todo.createdAt),
+            updatedAt: new Date(todo.updatedAt),
+          }))}
           onToggle={(id, completed) => toggle.mutate({ id, completed })}
           onDelete={(id) => remove.mutate({ id })}
           isDeleting={remove.isPending}

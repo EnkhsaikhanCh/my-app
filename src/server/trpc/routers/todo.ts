@@ -36,7 +36,7 @@ export const todoRouter = router({
     .mutation(async ({ ctx, input }) => {
       await ctx.db
         .update(todos)
-        .set({ completed: input.completed })
+        .set({ completed: input.completed, updatedAt: new Date() })
         .where(eq(todos.id, input.id));
     }),
 
