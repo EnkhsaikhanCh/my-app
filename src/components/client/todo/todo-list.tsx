@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import type { Todo } from "@/db/schema";
 
 import { TodoItem } from "./todo-item";
@@ -9,6 +10,17 @@ interface TodoListProps {
   onToggle: (id: string, completed: boolean) => void;
   onDelete: (id: string) => void;
   isDeleting: boolean;
+  isLoading?: boolean;
+}
+
+function TodoSkeleton() {
+  return (
+    <div className="bg-card border-border flex items-center gap-3 rounded-lg border p-4">
+      <Skeleton className="h-5 w-5 rounded" />
+      <Skeleton className="h-5 flex-1" />
+      <Skeleton className="h-8 w-8" />
+    </div>
+  );
 }
 
 export function TodoList({
@@ -16,7 +28,18 @@ export function TodoList({
   onToggle,
   onDelete,
   isDeleting,
+  isLoading = false,
 }: TodoListProps) {
+  if (isLoading) {
+    return (
+      <div className="space-y-2">
+        <TodoSkeleton />
+        <TodoSkeleton />
+        <TodoSkeleton />
+      </div>
+    );
+  }
+
   if (todos.length === 0) {
     return (
       <p className="text-muted-foreground py-8 text-center">

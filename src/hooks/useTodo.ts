@@ -5,7 +5,10 @@ import { trpc } from "@/lib/trpc";
 
 export function useTodo() {
   const utils = trpc.useUtils();
-  const { data: todos = [] } = trpc.todo.getAll.useQuery() as { data: Todo[] };
+  const { data: todos = [], isLoading } = trpc.todo.getAll.useQuery() as {
+    data: Todo[];
+    isLoading: boolean;
+  };
 
   const create = trpc.todo.create.useMutation({
     onSuccess: () => utils.todo.getAll.invalidate(),
@@ -19,5 +22,5 @@ export function useTodo() {
     onSuccess: () => utils.todo.getAll.invalidate(),
   });
 
-  return { todos, create, toggle, remove };
+  return { todos, isLoading, create, toggle, remove };
 }
