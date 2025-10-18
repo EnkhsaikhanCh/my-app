@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { ChevronUpIcon, LogOutIcon, ShieldIcon, User2Icon } from "lucide-react";
 
@@ -24,7 +25,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { MAIN_NAVIGATION_ITEMS } from "@/constants/navigation";
-import { usePathname } from "next/navigation";
 
 interface SidebarNavigationProps {
   items: typeof MAIN_NAVIGATION_ITEMS;
