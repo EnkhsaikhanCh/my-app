@@ -1,14 +1,18 @@
 // eslint-disable-next-line camelcase
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
 import { UI_CONSTANTS } from "@/constants/ui";
+import { queryClient } from "@/lib/trpc";
 
 import type { Metadata } from "next";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,8 +46,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          <NuqsAdapter>{children}</NuqsAdapter>
-          <Toaster richColors position={UI_CONSTANTS.TOASTER.POSITION} />
+          <QueryClientProvider client={queryClient}>
+            <NuqsAdapter>{children}</NuqsAdapter>
+            <ReactQueryDevtools />
+            <Toaster richColors position={UI_CONSTANTS.TOASTER.POSITION} />
+          </QueryClientProvider>
         </ThemeProvider>
       </body>
     </html>
