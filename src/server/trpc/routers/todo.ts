@@ -40,6 +40,20 @@ export const todoRouter = router({
         .where(eq(todos.id, input.id));
     }),
 
+  edit: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(todos)
+        .set({ title: input.title, updatedAt: new Date() })
+        .where(eq(todos.id, input.id));
+    }),
+
   delete: publicProcedure
     .input(
       z.object({

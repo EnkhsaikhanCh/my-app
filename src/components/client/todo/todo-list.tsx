@@ -17,7 +17,9 @@ import { TodoItem } from "./todo-item";
 interface TodoListProps {
   todos: Todo[];
   onToggle: (id: string, completed: boolean) => void;
+  onEdit: (id: string, title: string) => void;
   onDelete: (id: string) => void;
+  isEditing: boolean;
   isDeleting: boolean;
   isLoading?: boolean;
 }
@@ -45,7 +47,9 @@ const EmptyState = ({
 export function TodoList({
   todos,
   onToggle,
+  onEdit,
   onDelete,
+  isEditing,
   isDeleting,
   isLoading = false,
 }: TodoListProps) {
@@ -75,7 +79,9 @@ export function TodoList({
             key={todo.id}
             todo={todo}
             onToggle={onToggle}
+            onEdit={onEdit}
             onDelete={onDelete}
+            isEditing={isEditing}
             isDeleting={isDeleting}
           />
         ))}

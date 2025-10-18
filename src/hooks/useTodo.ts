@@ -19,9 +19,12 @@ export function useTodo() {
   const toggle = useMutation(
     trpc.todo.toggle.mutationOptions({ onSuccess: () => todosQuery.refetch() }),
   );
+  const edit = useMutation(
+    trpc.todo.edit.mutationOptions({ onSuccess: () => todosQuery.refetch() }),
+  );
   const remove = useMutation(
     trpc.todo.delete.mutationOptions({ onSuccess: () => todosQuery.refetch() }),
   );
 
-  return { todos, isLoading, create, toggle, remove };
+  return { todos, isLoading, create, toggle, edit, remove };
 }
