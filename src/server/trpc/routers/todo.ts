@@ -3,14 +3,14 @@ import { z } from "zod";
 
 import { todos } from "@/db/schema";
 
-import { publicProcedure, router } from "../trpc";
+import { protectedProcedure, router } from "../trpc";
 
 export const todoRouter = router({
-  getAll: publicProcedure.query(async ({ ctx }) =>
+  getAll: protectedProcedure.query(async ({ ctx }) =>
     ctx.db.select().from(todos).orderBy(todos.createdAt),
   ),
 
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         title: z.string().min(1),
@@ -26,7 +26,7 @@ export const todoRouter = router({
       return { id };
     }),
 
-  toggle: publicProcedure
+  toggle: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -40,7 +40,7 @@ export const todoRouter = router({
         .where(eq(todos.id, input.id));
     }),
 
-  edit: publicProcedure
+  edit: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -54,7 +54,7 @@ export const todoRouter = router({
         .where(eq(todos.id, input.id));
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(
       z.object({
         id: z.string(),
