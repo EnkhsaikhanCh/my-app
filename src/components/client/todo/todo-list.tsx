@@ -68,20 +68,22 @@ export function TodoList({
   }
 
   return (
-    <div className="space-y-2">
-      {todos.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onToggle={onToggle}
-          onDelete={onDelete}
-          isDeleting={isDeleting}
-        />
-      ))}
-      <div className="text-muted-foreground text-sm">
+    <>
+      <div className="space-y-2">
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onToggle={onToggle}
+            onDelete={onDelete}
+            isDeleting={isDeleting}
+          />
+        ))}
+      </div>
+      <div className="text-muted-foreground mt-5 text-center text-sm">
         {todos.filter((t) => !t.completed).length} of {todos.length} todos
         remaining
       </div>
-    </div>
+    </>
   );
 }

@@ -20,7 +20,7 @@ export function TodoItem({
   isDeleting,
 }: TodoItemProps) {
   return (
-    <div className="bg-card border-border hover:bg-accent/50 flex items-center gap-3 rounded-lg border p-4 transition-colors">
+    <div className="bg-card border-border hover:bg-accent/50 flex items-center gap-3 rounded-lg border px-4 py-2 transition-colors">
       <Checkbox
         checked={todo.completed}
         onCheckedChange={(checked) => onToggle(todo.id, checked === true)}
@@ -33,8 +33,8 @@ export function TodoItem({
         {todo.title}
       </span>
       <Button
-        variant="ghost"
-        size="icon"
+        variant="outline"
+        size="icon-sm"
         onClick={() => onDelete(todo.id)}
         disabled={isDeleting}
       >
