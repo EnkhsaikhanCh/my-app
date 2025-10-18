@@ -40,12 +40,16 @@ import { db } from "@/lib/drizzle";
 **Critical Data Flow**: The app uses a tRPC-based architecture where type safety flows from backend to frontend without code generation:
 
 1. **Database Layer** (`src/db/schema.ts`): Define Drizzle schemas with type inference
+
    ```typescript
-   export const todos = pgTable("todos", { /* ... */ });
+   export const todos = pgTable("todos", {
+     /* ... */
+   });
    export type Todo = typeof todos.$inferSelect;
    ```
 
 2. **tRPC Context** (`src/server/trpc/context.ts`): Provides request-scoped resources (DB instance)
+
    ```typescript
    export async function createContext() {
      return { db };
@@ -53,34 +57,55 @@ import { db } from "@/lib/drizzle";
    ```
 
 3. **tRPC Routers** (`src/server/trpc/routers/*.ts`): Define procedures with Zod input validation
+
    ```typescript
    export const todoRouter = router({
-     getAll: publicProcedure.query(async ({ ctx }) => ctx.db.select().from(todos)),
-     create: publicProcedure.input(z.object({ title: z.string() })).mutation(/* ... */),
+     getAll: publicProcedure.query(async ({ ctx }) =>
+       ctx.db.select().from(todos),
+     ),
+     create: publicProcedure
+       .input(z.object({ title: z.string() }))
+       .mutation(/* ... */),
    });
    ```
 
 4. **App Router** (`src/server/trpc/index.ts`): Aggregates all feature routers
+
    ```typescript
    export const appRouter = router({ todo: todoRouter });
    export type AppRouter = typeof appRouter;
    ```
 
 5. **Route Handler** (`src/app/api/trpc/[trpc]/route.ts`): Exposes tRPC via Next.js API route
+
    ```typescript
-   const handler = (req: Request) => fetchRequestHandler({ /* ... */ });
+   const handler = (req: Request) =>
+     fetchRequestHandler({
+       /* ... */
+     });
    export { handler as GET, handler as POST };
    ```
 
 6. **Client Setup** (`src/lib/trpc.ts`): Creates tRPC client with TanStack Query integration
+
    ```typescript
-   export const trpc = createTRPCOptionsProxy<AppRouter>({ client: trpcClient, queryClient });
+   export const trpc = createTRPCOptionsProxy<AppRouter>({
+     client: trpcClient,
+     queryClient,
+   });
    ```
 
 7. **React Hooks** (`src/hooks/useTodo.ts`): Custom hooks using tRPC query/mutation options
    ```typescript
-   const todosQuery = useQuery({ ...trpc.todo.getAll.queryOptions(), ...defaultQueryOptions });
-   const create = useMutation(trpc.todo.create.mutationOptions({ onSuccess: () => todosQuery.refetch() }));
+   const todosQuery = useQuery({
+     ...trpc.todo.getAll.queryOptions(),
+     ...defaultQueryOptions,
+   });
+   const create = useMutation(
+     trpc.todo.create.mutationOptions({
+       onSuccess: () => todosQuery.refetch(),
+     }),
+   );
    ```
 
 **Key Insight**: Never manually type API responses - types flow automatically from `AppRouter` to client via tRPC.
@@ -91,16 +116,17 @@ The project uses shared query defaults in `src/lib/query-options.ts` to prevent 
 
 ```typescript
 export const defaultQueryOptions = {
-  staleTime: 60_000,           // 1 minute
-  refetchOnMount: false,        // never auto-refetch on mount
-  refetchOnWindowFocus: false,  // never auto-refetch on focus
-  retry: false,                 // disable auto-retry
+  staleTime: 60_000, // 1 minute
+  refetchOnMount: false, // never auto-refetch on mount
+  refetchOnWindowFocus: false, // never auto-refetch on focus
+  retry: false, // disable auto-retry
 };
 ```
 
 **Usage**: Merge these into `useQuery` calls to override TanStack Query's defaults:
+
 ```typescript
-useQuery({ ...trpc.todo.getAll.queryOptions(), ...defaultQueryOptions })
+useQuery({ ...trpc.todo.getAll.queryOptions(), ...defaultQueryOptions });
 ```
 
 ### Component Architecture
@@ -167,6 +193,7 @@ bun run db:studio    # Open Drizzle Studio GUI at https://local.drizzle.studio
 ```
 
 **Schema Change Workflow**:
+
 1. Modify `src/db/schema.ts` (add/update tables, columns, etc.)
 2. Run `bun run db:generate` to create migration in `drizzle/` directory
 3. Run `bun run db:migrate` to apply migration to database
@@ -347,6 +374,7 @@ Create files in `src/app/[route]/page.tsx` using App Router conventions. All pag
 ### Adding New Backend Features
 
 1. **Create tRPC Router**: Add file to `src/server/trpc/routers/[feature].ts` with procedures
+
    ```typescript
    export const featureRouter = router({
      action: publicProcedure.input(z.object({...})).mutation(async ({ ctx, input }) => {...}),
@@ -354,10 +382,11 @@ Create files in `src/app/[route]/page.tsx` using App Router conventions. All pag
    ```
 
 2. **Register in App Router**: Import and add to `src/server/trpc/index.ts`
+
    ```typescript
    export const appRouter = router({
      todo: todoRouter,
-     feature: featureRouter,  // Add new router here
+     feature: featureRouter, // Add new router here
    });
    ```
 

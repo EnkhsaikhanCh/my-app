@@ -6,17 +6,20 @@ The file has been successfully updated to include comprehensive backend architec
 
 ### ✅ New Sections Added
 
-#### 1. **Backend Architecture (tRPC + Drizzle ORM)** 
+#### 1. **Backend Architecture (tRPC + Drizzle ORM)**
+
 - Added complete 7-step data flow diagram showing how type safety flows from database → tRPC → React
 - Explains the critical pattern: types auto-flow via `AppRouter`, no manual typing needed
 - Documents each layer: DB schema → context → routers → app router → route handler → client → React hooks
 
 #### 2. **Query Defaults Pattern**
+
 - Documents the `defaultQueryOptions` pattern in `src/lib/query-options.ts`
 - Explains why: prevents aggressive TanStack Query refetching behavior
 - Shows usage pattern for merging into `useQuery` calls
 
 #### 3. **Database Workflows**
+
 - Added complete Drizzle ORM command reference:
   - `bun run db:generate` - generate migrations
   - `bun run db:migrate` - run migrations
@@ -27,22 +30,26 @@ The file has been successfully updated to include comprehensive backend architec
 - Driver clarification (postgres package, not @vercel/postgres)
 
 #### 4. **Adding New Backend Features**
+
 - 3-step workflow for creating new tRPC endpoints
 - Shows where to create routers, how to register them, and how to use them in frontend
 - Emphasizes automatic type flow (no manual imports)
 
 #### 5. **Error Handling Documentation**
+
 - Documents global error handling in `src/lib/trpc.ts`
 - Explains automatic toast notifications with retry actions
 
 ### ✅ Updated Sections
 
 #### Project Overview
+
 - Changed from "Next.js 15 application" to "Next.js 15 **fullstack** application"
 - Added backend tech stack: tRPC, Drizzle ORM
 - Clarified architecture: single-project structure with type-safe API
 
 #### Directory Organization
+
 - Added backend directories:
   - `src/app/api/trpc/[trpc]/` - tRPC route handler
   - `src/server/trpc/` - Backend routers and procedures
@@ -53,6 +60,7 @@ The file has been successfully updated to include comprehensive backend architec
 - Added config and constants directories
 
 #### Path Aliases
+
 - Added backend import examples:
   - `import { trpc } from "@/lib/trpc"`
   - `import { db } from "@/lib/drizzle"`
@@ -60,6 +68,7 @@ The file has been successfully updated to include comprehensive backend architec
 ### ✅ Preserved Content
 
 All existing frontend documentation remains intact:
+
 - Component architecture patterns (CVA, Radix UI, data-slot)
 - Styling system (Tailwind v4, CSS variables, dark mode)
 - State management (forms, themes, TanStack Query, URL state)
@@ -81,6 +90,7 @@ All existing frontend documentation remains intact:
 ## Files Referenced
 
 The updated instructions reference these key architectural files:
+
 - `src/server/trpc/index.ts` - App router
 - `src/server/trpc/routers/todo.ts` - Example router
 - `src/server/trpc/context.ts` - Context setup
