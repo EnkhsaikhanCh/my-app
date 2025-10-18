@@ -2,18 +2,24 @@
 
 ## Project Overview
 
-This is a Next.js 15 application using the App Router, TypeScript, and shadcn/ui components with Tailwind CSS v4. The project follows a component-driven architecture with a comprehensive UI library built on Radix UI primitives.
+This is a Next.js 15 fullstack application using App Router, TypeScript, tRPC, Drizzle ORM, and shadcn/ui components with Tailwind CSS v4. The project is a single-project structure (no monorepo) with type-safe API communication between frontend and backend.
 
 ## Architecture & Structure
 
 ### Directory Organization
 
 - `src/app/` - Next.js App Router pages and layouts
+- `src/app/api/trpc/[trpc]/` - tRPC route handler (Next.js API route)
+- `src/server/trpc/` - Backend: tRPC router, procedures, and context
+- `src/server/trpc/routers/` - Feature-specific tRPC routers (e.g., `todo.ts`)
+- `src/db/` - Drizzle ORM schema definitions
+- `src/lib/` - Shared utilities (`trpc.ts` client, `drizzle.ts` DB instance, `utils.ts`)
 - `src/components/ui/` - shadcn/ui components (40+ pre-built components)
 - `src/components/` - Custom components (e.g., `theme-provider.tsx`, `mode-toggle.tsx`)
-- `src/hooks/` - Custom React hooks (e.g., `use-mobile.ts`)
-- `src/lib/` - Utility functions (`utils.ts` with `cn()` helper)
-- `public/` - Static assets
+- `src/hooks/` - Custom React hooks (e.g., `use-mobile.ts`, `useTodo.ts`)
+- `src/config/` - Configuration files (site config, etc.)
+- `src/constants/` - Application constants (navigation, theme, UI constants)
+- `drizzle/` - Database migrations
 
 ### Path Aliases
 
@@ -23,9 +29,79 @@ All imports use TypeScript path aliases defined in `tsconfig.json`:
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { trpc } from "@/lib/trpc";
+import { db } from "@/lib/drizzle";
 ```
 
 ## Key Technologies & Patterns
+
+### Backend Architecture (tRPC + Drizzle ORM)
+
+**Critical Data Flow**: The app uses a tRPC-based architecture where type safety flows from backend to frontend without code generation:
+
+1. **Database Layer** (`src/db/schema.ts`): Define Drizzle schemas with type inference
+   ```typescript
+   export const todos = pgTable("todos", { /* ... */ });
+   export type Todo = typeof todos.$inferSelect;
+   ```
+
+2. **tRPC Context** (`src/server/trpc/context.ts`): Provides request-scoped resources (DB instance)
+   ```typescript
+   export async function createContext() {
+     return { db };
+   }
+   ```
+
+3. **tRPC Routers** (`src/server/trpc/routers/*.ts`): Define procedures with Zod input validation
+   ```typescript
+   export const todoRouter = router({
+     getAll: publicProcedure.query(async ({ ctx }) => ctx.db.select().from(todos)),
+     create: publicProcedure.input(z.object({ title: z.string() })).mutation(/* ... */),
+   });
+   ```
+
+4. **App Router** (`src/server/trpc/index.ts`): Aggregates all feature routers
+   ```typescript
+   export const appRouter = router({ todo: todoRouter });
+   export type AppRouter = typeof appRouter;
+   ```
+
+5. **Route Handler** (`src/app/api/trpc/[trpc]/route.ts`): Exposes tRPC via Next.js API route
+   ```typescript
+   const handler = (req: Request) => fetchRequestHandler({ /* ... */ });
+   export { handler as GET, handler as POST };
+   ```
+
+6. **Client Setup** (`src/lib/trpc.ts`): Creates tRPC client with TanStack Query integration
+   ```typescript
+   export const trpc = createTRPCOptionsProxy<AppRouter>({ client: trpcClient, queryClient });
+   ```
+
+7. **React Hooks** (`src/hooks/useTodo.ts`): Custom hooks using tRPC query/mutation options
+   ```typescript
+   const todosQuery = useQuery({ ...trpc.todo.getAll.queryOptions(), ...defaultQueryOptions });
+   const create = useMutation(trpc.todo.create.mutationOptions({ onSuccess: () => todosQuery.refetch() }));
+   ```
+
+**Key Insight**: Never manually type API responses - types flow automatically from `AppRouter` to client via tRPC.
+
+### Query Defaults Pattern
+
+The project uses shared query defaults in `src/lib/query-options.ts` to prevent aggressive refetching:
+
+```typescript
+export const defaultQueryOptions = {
+  staleTime: 60_000,           // 1 minute
+  refetchOnMount: false,        // never auto-refetch on mount
+  refetchOnWindowFocus: false,  // never auto-refetch on focus
+  retry: false,                 // disable auto-retry
+};
+```
+
+**Usage**: Merge these into `useQuery` calls to override TanStack Query's defaults:
+```typescript
+useQuery({ ...trpc.todo.getAll.queryOptions(), ...defaultQueryOptions })
+```
 
 ### Component Architecture
 
@@ -78,6 +154,25 @@ bun start          # Start production server
 bun run lint       # Run ESLint
 bun run lint:fix   # Auto-fix ESLint issues
 ```
+
+### Database Workflows (Drizzle ORM + Supabase PostgreSQL)
+
+**Environment Setup**: Requires `SUPABASE_DB_URL` in `.env` file (connection string format)
+
+```bash
+bun run db:generate  # Generate migration files from schema changes in src/db/schema.ts
+bun run db:migrate   # Run migrations against database
+bun run db:push      # Push schema directly (skip migrations, dev only)
+bun run db:studio    # Open Drizzle Studio GUI at https://local.drizzle.studio
+```
+
+**Schema Change Workflow**:
+1. Modify `src/db/schema.ts` (add/update tables, columns, etc.)
+2. Run `bun run db:generate` to create migration in `drizzle/` directory
+3. Run `bun run db:migrate` to apply migration to database
+4. Types auto-update via `typeof schema.$inferSelect` - no manual steps needed
+
+**Important**: This project uses `postgres` driver (not `@vercel/postgres` or `pg`). Connection string should start with `postgres://` or `postgresql://`.
 
 ### Adding shadcn/ui Components
 
@@ -249,6 +344,28 @@ Mark components with `"use client"` when they use:
 
 Create files in `src/app/[route]/page.tsx` using App Router conventions. All pages are Server Components by default.
 
+### Adding New Backend Features
+
+1. **Create tRPC Router**: Add file to `src/server/trpc/routers/[feature].ts` with procedures
+   ```typescript
+   export const featureRouter = router({
+     action: publicProcedure.input(z.object({...})).mutation(async ({ ctx, input }) => {...}),
+   });
+   ```
+
+2. **Register in App Router**: Import and add to `src/server/trpc/index.ts`
+   ```typescript
+   export const appRouter = router({
+     todo: todoRouter,
+     feature: featureRouter,  // Add new router here
+   });
+   ```
+
+3. **Use in Frontend**: Types auto-flow via `trpc.feature.action` - no imports needed
+   ```typescript
+   const mutation = useMutation(trpc.feature.action.mutationOptions());
+   ```
+
 ### Form Handling
 
 Use the Form component from `@/components/ui/form` which integrates:
@@ -265,6 +382,8 @@ Use Sonner toast library (already configured in layout):
 import { toast } from "sonner";
 toast.success("Message");
 ```
+
+**Error Handling**: Global error handling configured in `src/lib/trpc.ts` - tRPC errors automatically show toast notifications with retry action.
 
 ### Mobile Detection
 
