@@ -128,10 +128,27 @@ export function AdminSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <NavHeader />
+        <NavHeader isAdmin />
       </SidebarHeader>
       <SidebarContent>
         <AdminSidebarNavigation items={ADMIN_NAV_ITEMS} />
+
+        {/* User */}
+        <SidebarGroup>
+          <SidebarGroupLabel>User</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/dashboard">
+                    <User2Icon />
+                    <span>User Panel</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <AdminUserMenu />

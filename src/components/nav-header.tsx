@@ -12,9 +12,10 @@ import { UI_CONSTANTS } from "@/constants/ui";
 
 interface NavLogoProps {
   name: string;
+  isAdmin?: boolean;
 }
 
-function NavLogo({ name }: NavLogoProps) {
+function NavLogo({ name, isAdmin }: NavLogoProps) {
   return (
     <>
       <div className="bg-sidebar-primary flex aspect-square size-8 items-center justify-center rounded-lg text-white">
@@ -25,18 +26,21 @@ function NavLogo({ name }: NavLogoProps) {
       </div>
       <div className="flex flex-col gap-0.5 leading-none">
         <span className="font-medium">{name}</span>
+        {isAdmin && (
+          <span className="text-muted-foreground text-xs">Admin Panel</span>
+        )}
       </div>
     </>
   );
 }
 
-export function NavHeader() {
+export function NavHeader({ isAdmin }: { isAdmin?: boolean }) {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton size="lg" asChild>
           <Link href="/" aria-label={`Go to ${siteConfig.name} home page`}>
-            <NavLogo name={siteConfig.name} />
+            <NavLogo name={siteConfig.name} isAdmin={isAdmin} />
           </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
