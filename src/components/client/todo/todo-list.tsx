@@ -1,6 +1,15 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { AlertTriangleIcon, CircleDashedIcon } from "lucide-react";
+
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import { Spinner } from "@/components/ui/spinner";
 import type { Todo } from "@/db/schema";
 
 import { TodoItem } from "./todo-item";
@@ -13,15 +22,25 @@ interface TodoListProps {
   isLoading?: boolean;
 }
 
-function TodoSkeleton() {
-  return (
-    <div className="bg-card border-border flex items-center gap-3 rounded-lg border p-4">
-      <Skeleton className="h-5 w-5 rounded" />
-      <Skeleton className="h-5 flex-1" />
-      <Skeleton className="h-8 w-8" />
-    </div>
-  );
-}
+const EmptyState = ({
+  title,
+  description = "Something went wrong. Please try again.",
+  icon = <AlertTriangleIcon />,
+}: {
+  title?: string;
+  description?: string;
+  icon?: React.ReactNode;
+}) => (
+  <Empty>
+    <EmptyHeader>
+      <EmptyMedia variant="icon">{icon}</EmptyMedia>
+      <EmptyTitle>{title}</EmptyTitle>
+      <EmptyDescription>
+        {description || "Something went wrong. Please try again."}
+      </EmptyDescription>
+    </EmptyHeader>
+  </Empty>
+);
 
 export function TodoList({
   todos,
@@ -32,19 +51,19 @@ export function TodoList({
 }: TodoListProps) {
   if (isLoading) {
     return (
-      <div className="space-y-2">
-        <TodoSkeleton />
-        <TodoSkeleton />
-        <TodoSkeleton />
+      <div className="flex justify-center py-4">
+        <Spinner />
       </div>
     );
   }
 
   if (todos.length === 0) {
     return (
-      <p className="text-muted-foreground py-8 text-center">
-        No todos yet. Add one above to get started!
-      </p>
+      <EmptyState
+        icon={<CircleDashedIcon />}
+        title="No todos found"
+        description="You haven't created any tasks yet. Get started by creating your first task."
+      />
     );
   }
 

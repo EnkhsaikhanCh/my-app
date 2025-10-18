@@ -24,17 +24,15 @@ export function TodoForm({ onAdd, isPending }: TodoFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
+    <form onSubmit={handleSubmit} className="mb-6 flex items-center space-x-2">
       <Input
         type="text"
         placeholder="Add a new todo..."
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="flex-1"
       />
       <Button type="submit" disabled={isPending || !title.trim()}>
-        {isPending && <Spinner />}
-        {isPending ? "Adding..." : "Add"}
+        {isPending ? <Spinner /> : "Add"}
       </Button>
     </form>
   );
