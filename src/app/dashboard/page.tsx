@@ -1,4 +1,4 @@
-import { ClientButton } from "@/components/client-button";
+import { ClientButton } from "@/components/client/client-button";
 import { PageHeading } from "@/components/page-heading";
 
 export default function DashboardPage() {

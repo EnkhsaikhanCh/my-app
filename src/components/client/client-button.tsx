@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import { Button } from "./ui/button";
-import { Spinner } from "./ui/spinner";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
 
 export function ClientButton() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
