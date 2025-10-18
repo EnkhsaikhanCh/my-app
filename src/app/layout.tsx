@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
 import { UI_CONSTANTS } from "@/constants/ui";
+import { TRPCProvider } from "@/lib/trpc";
 
 import type { Metadata } from "next";
 import "./globals.css";
@@ -42,8 +43,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          <NuqsAdapter>{children}</NuqsAdapter>
-          <Toaster richColors position={UI_CONSTANTS.TOASTER.POSITION} />
+          <TRPCProvider>
+            <NuqsAdapter>{children}</NuqsAdapter>
+            <Toaster richColors position={UI_CONSTANTS.TOASTER.POSITION} />
+          </TRPCProvider>
         </ThemeProvider>
       </body>
     </html>
