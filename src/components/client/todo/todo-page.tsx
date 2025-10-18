@@ -1,8 +1,10 @@
 "use client";
 
-import { TodoForm, TodoList } from "@/components/client/todo";
 import { PageHeading } from "@/components/page-heading";
 import { useTodo } from "@/hooks/useTodo";
+
+import { TodoForm } from "./todo-form";
+import { TodoList } from "./todo-list";
 
 export default function TodoPage() {
   const { todos, create, toggle, remove } = useTodo();
