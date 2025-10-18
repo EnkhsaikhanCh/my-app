@@ -66,7 +66,7 @@ function AdminSidebarNavigation({ items }: AdminSidebarNavigationProps) {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Admin Panel</SidebarGroupLabel>
+      <SidebarGroupLabel>Main</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map(({ title, url, icon: Icon }) => {
