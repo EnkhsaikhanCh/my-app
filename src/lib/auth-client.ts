@@ -1,7 +1,7 @@
-import { betterAuth } from "better-auth";
 import { adminClient } from "better-auth/client/plugins";
+import { createAuthClient } from "better-auth/react";
 
-export const auth = betterAuth({
+export const authClient = createAuthClient({
   basePath: "/api/auth",
   plugins: [adminClient()],
 });
