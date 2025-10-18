@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 import { ChevronUpIcon, LogOutIcon, ShieldIcon, User2Icon } from "lucide-react";
@@ -22,27 +24,33 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { MAIN_NAVIGATION_ITEMS } from "@/constants/navigation";
+import { usePathname } from "next/navigation";
 
 interface SidebarNavigationProps {
   items: typeof MAIN_NAVIGATION_ITEMS;
 }
 
 function SidebarNavigation({ items }: SidebarNavigationProps) {
+  const pathname = usePathname();
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Main</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map(({ title, url, icon: Icon }) => (
-            <SidebarMenuItem key={title}>
-              <SidebarMenuButton asChild>
-                <Link href={url}>
-                  <Icon />
-                  <span>{title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {items.map(({ title, url, icon: Icon }) => {
+            const isActive = pathname === url;
+            return (
+              <SidebarMenuItem key={title}>
+                <SidebarMenuButton asChild isActive={isActive}>
+                  <Link href={url}>
+                    <Icon />
+                    <span>{title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
