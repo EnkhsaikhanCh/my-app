@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 
 interface TodoFormProps {
   onAdd: (title: string) => void;
@@ -32,6 +33,7 @@ export function TodoForm({ onAdd, isPending }: TodoFormProps) {
         className="flex-1"
       />
       <Button type="submit" disabled={isPending || !title.trim()}>
+        {isPending && <Spinner />}
         {isPending ? "Adding..." : "Add"}
       </Button>
     </form>
