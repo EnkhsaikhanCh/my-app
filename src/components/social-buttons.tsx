@@ -21,7 +21,7 @@ const SOCIAL_ICONS = {
 
 export function SocialButtons() {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-4 md:gap-3">
       {Object.entries(siteConfig.socials).map(([key, href]) => {
         if (!href) return null; // skip missing links
         const Icon = SOCIAL_ICONS[key as keyof typeof SOCIAL_ICONS];
