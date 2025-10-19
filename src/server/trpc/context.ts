@@ -1,8 +1,15 @@
+import { auth } from "@/lib/auth";
 import { db } from "@/lib/drizzle";
 
-export async function createContext() {
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+
+export async function createContext(opts: FetchCreateContextFnOptions) {
+  const session = await auth.api.getSession({
+    headers: opts.req.headers,
+  });
   return {
     db,
+    session,
   };
 }
 

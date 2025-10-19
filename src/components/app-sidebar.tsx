@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { ChevronUpIcon, LogOutIcon, ShieldIcon, User2Icon } from "lucide-react";
 
@@ -25,6 +25,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { MAIN_NAVIGATION_ITEMS } from "@/constants/navigation";
+import { authClient } from "@/lib/auth-client";
+import { queryClient } from "@/lib/trpc";
 
 interface SidebarNavigationProps {
   items: typeof MAIN_NAVIGATION_ITEMS;
@@ -57,11 +59,10 @@ function SidebarNavigation({ items }: SidebarNavigationProps) {
   );
 }
 
-interface UserMenuProps {
-  username?: string;
-}
+function UserMenu() {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
 
-function UserMenu({ username = "Username" }: UserMenuProps) {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -69,7 +70,9 @@ function UserMenu({ username = "Username" }: UserMenuProps) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton>
               <User2Icon aria-hidden="true" />
-              <span>{username}</span>
+              <span>
+                {isPending ? "Loading..." : session && session.user.email}
+              </span>
               <ChevronUpIcon className="ml-auto" aria-hidden="true" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -77,7 +80,14 @@ function UserMenu({ username = "Username" }: UserMenuProps) {
             side="top"
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
           >
-            <DropdownMenuItem className="flex justify-between">
+            <DropdownMenuItem
+              className="flex justify-between"
+              onClick={async () => {
+                await authClient.signOut(); // Delete server session
+                queryClient.clear(); // Clear all trpc / react-query cache
+                router.push("/"); // Redirect
+              }}
+            >
               <span>Sign out</span>
               <LogOutIcon />
             </DropdownMenuItem>

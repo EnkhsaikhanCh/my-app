@@ -8,6 +8,20 @@
       "when": 1760798965184,
       "tag": "0000_far_strong_guy",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1760814272742,
+      "tag": "0001_big_nekra",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1760820046465,
+      "tag": "0002_boring_terror",
+      "breakpoints": true
     }
   ]
 }

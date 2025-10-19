@@ -7,6 +7,7 @@ import { CheckIcon, EditIcon, Trash2Icon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import type { Todo } from "@/db/schema";
 
 interface TodoItemProps {
@@ -94,13 +95,20 @@ export function TodoItem({
         checked={todo.completed}
         onCheckedChange={(checked) => onToggle(todo.id, checked === true)}
       />
-      <span
-        className={`flex-1 ${
-          todo.completed ? "text-muted-foreground line-through" : ""
-        }`}
-      >
-        {todo.title}
-      </span>
+      {isEditing || isDeleting ? (
+        <span className="text-muted-foreground flex flex-1 items-center gap-2">
+          <Spinner />
+          Processing...
+        </span>
+      ) : (
+        <span
+          className={`flex-1 ${
+            todo.completed ? "text-muted-foreground line-through" : ""
+          }`}
+        >
+          {isEditing ? "Updating..." : todo.title}
+        </span>
+      )}
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
