@@ -9,10 +9,10 @@ import {
 } from "react-icons/fa6";
 
 import { HealthCheck } from "@/components/client/health-check";
+import { Metrics } from "@/components/metrics";
 import { PageHeader, HeaderNavigation } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { Metrics } from "@/components/metrics";
 
 export default function HomePage() {
   return (
