@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import { LayoutDashboardIcon } from "lucide-react";
-
 import { HeaderNavigation } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
@@ -21,11 +19,6 @@ export function Hero() {
             <Button variant="outline" asChild>
               <Link href="/login" target="_blank" rel="noopener noreferrer">
                 Login
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link href="/signup" target="_blank" rel="noopener noreferrer">
-                Sign up
               </Link>
             </Button>
           </HeaderNavigation>
@@ -79,7 +72,10 @@ export function Hero() {
               </Button>
             </div>
           </div>
-
+          <div>
+            © {new Date().getFullYear()} {siteConfig.name}. All rights
+            reserved.
+          </div>
           <SocialButtons />
         </div>
       </footer>
