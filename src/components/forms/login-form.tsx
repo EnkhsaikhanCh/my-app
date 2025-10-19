@@ -1,12 +1,9 @@
 "use client";
 
-import { useState } from "react";
-
 import Link from "next/link";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { type z } from "zod";
 
 import {
@@ -16,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { authClient } from "@/lib/auth-client";
+import { useLogin } from "@/hooks/auth-hooks/use-login";
 import { loginSchema } from "@/validation/auth";
 
 import { Button } from "../ui/button";
@@ -33,8 +30,7 @@ import { PasswordInput } from "../ui/password-input";
 import { Spinner } from "../ui/spinner";
 
 export function LoginForm(props: React.ComponentProps<typeof Card>) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const { login, isLoading } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -47,32 +43,7 @@ export function LoginForm(props: React.ComponentProps<typeof Card>) {
   });
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    try {
-      setIsLoading(true);
-      await authClient.signIn.email(
-        {
-          email: values.email,
-          password: values.password,
-          callbackURL: "/dashboard",
-          rememberMe: true,
-        },
-        {
-          onRequest: () => {
-            toast("Logging in...");
-          },
-          onSuccess: () => {
-            toast.success("Welcome back!");
-          },
-          onError: (ctx) => {
-            toast.error(ctx.error.message);
-          },
-        },
-      );
-    } catch {
-      toast.error("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    await login(values);
   };
 
   return (
@@ -129,8 +100,6 @@ export function LoginForm(props: React.ComponentProps<typeof Card>) {
                         {...field}
                         autoComplete="current-password"
                         disabled={isLoading}
-                        isVisible={showPassword}
-                        onVisibilityChange={setShowPassword}
                       />
                     </FormControl>
                     <FormMessage />
