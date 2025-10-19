@@ -12,6 +12,7 @@ import { HealthCheck } from "@/components/client/health-check";
 import { PageHeader, HeaderNavigation } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
+import { Metrics } from "@/components/metrics";
 
 export default function HomePage() {
   return (
@@ -57,6 +58,7 @@ export default function HomePage() {
               Start free trial, no credit card required.
             </p>
           </div>
+          <Metrics />
         </section>
 
         <footer className="py-4">
