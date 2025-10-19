@@ -21,6 +21,11 @@ export function Hero() {
                 Login
               </Link>
             </Button>
+            <Button asChild>
+              <Link href="/signup" target="_blank" rel="noopener noreferrer">
+                Sign Up
+              </Link>
+            </Button>
           </HeaderNavigation>
         </div>
       </header>
