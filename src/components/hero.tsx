@@ -36,17 +36,15 @@ export function Hero() {
             </h2>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button
-                variant="outline"
-                className="h-11 border-transparent bg-[#F2F1EF] px-6 dark:bg-[#1D1D1D]"
-                disabled
-              >
+              <Button variant="outline" className="h-11 px-6" disabled>
                 <Link href="#" target="_blank" rel="noopener noreferrer">
                   Contact Us
                 </Link>
               </Button>
               <Button className="h-11 px-6" disabled>
-                Start free trial
+                <Link href="#" target="_blank" rel="noopener noreferrer">
+                  Start free trial
+                </Link>
               </Button>
             </div>
 
