@@ -1,13 +1,9 @@
 "use client";
 
-import { useState } from "react";
-
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { type z } from "zod";
 
 import {
@@ -18,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
-import { authClient } from "@/lib/auth-client";
+import { useSignup } from "@/hooks/auth-hooks/use-signup";
 import { signupSchema } from "@/validation/auth";
 
 import { Button } from "../ui/button";
@@ -34,9 +30,7 @@ import { Input } from "../ui/input";
 import { Spinner } from "../ui/spinner";
 
 export function SignupForm(props: React.ComponentProps<typeof Card>) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const { signup, isLoading } = useSignup();
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -50,35 +44,7 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
   });
 
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
-    try {
-      setIsLoading(true);
-      await authClient.signUp.email(
-        {
-          email: values.email,
-          password: values.password,
-          name: values.username,
-          callbackURL: "/dashboard",
-        },
-        {
-          onRequest: () => {
-            toast("Creating your account...");
-          },
-          onSuccess: () => {
-            toast.success("Account created successfully.");
-            form.reset();
-            setShowPassword(false);
-            router.push("/dashboard");
-          },
-          onError: (ctx) => {
-            toast.error(ctx.error.message);
-          },
-        },
-      );
-    } catch {
-      toast.error("Network error. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    await signup(values);
   };
 
   return (
@@ -149,8 +115,6 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
                         id="password"
                         autoComplete="new-password"
                         disabled={isLoading}
-                        isVisible={showPassword}
-                        onVisibilityChange={setShowPassword}
                       />
                     </FormControl>
                     <FormMessage />
