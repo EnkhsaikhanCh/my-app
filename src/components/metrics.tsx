@@ -15,8 +15,8 @@ export function Metrics() {
       {metrics.map((item) => (
         <Link key={item.id} href="/open-startup">
           <div className="flex flex-col pr-8 text-center">
-            <h4 className="mb-4 text-sm text-[#878787]">{item.label}</h4>
-            <span className="text-stroke font-mono text-2xl">{item.value}</span>
+            <h4 className="mb-4 text-[#878787]">{item.label}</h4>
+            <span className="text-2xl">{item.value}</span>
           </div>
         </Link>
       ))}
