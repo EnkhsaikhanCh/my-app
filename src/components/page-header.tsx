@@ -6,7 +6,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ children }: PageHeaderProps) {
   return (
-    <header className="flex items-center justify-between border-b p-4">
+    <header className="flex items-center justify-between py-4">
       {children}
     </header>
   );
