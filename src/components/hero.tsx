@@ -72,7 +72,7 @@ export function Hero() {
               </Button>
             </div>
           </div>
-          <div className="my-4 flex items-center md:my-0">
+          <div className="text-muted-foreground my-4 flex items-center font-mono text-sm md:my-0">
             © {new Date().getFullYear()} {siteConfig.name}. All rights
             reserved.
           </div>
