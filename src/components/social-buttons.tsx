@@ -26,7 +26,7 @@ export function SocialButtons() {
         if (!href) return null; // skip missing links
         const Icon = SOCIAL_ICONS[key as keyof typeof SOCIAL_ICONS];
         return (
-          <Button key={key} variant="ghost" size="icon-sm" disabled>
+          <Button key={key} variant="outline" size="icon-sm" disabled>
             <Link
               href={href}
               target="_blank"
