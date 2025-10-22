@@ -34,9 +34,9 @@ export function HealthCheck() {
   }[status];
 
   return (
-    <div className="flex items-center gap-2">
-      {statusConfig.icon}
+    <div className="flex items-center gap-1.5">
       <span className="text-muted-foreground text-sm">{statusConfig.text}</span>
+      {statusConfig.icon}
     </div>
   );
 }
