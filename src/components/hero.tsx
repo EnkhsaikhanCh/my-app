@@ -17,14 +17,10 @@ export function Hero() {
           </h1>
           <HeaderNavigation>
             <Button variant="outline" asChild>
-              <Link href="/login" target="_blank" rel="noopener noreferrer">
-                Login
-              </Link>
+              <Link href="/login">Login</Link>
             </Button>
             <Button asChild>
-              <Link href="/signup" target="_blank" rel="noopener noreferrer">
-                Sign Up
-              </Link>
+              <Link href="/signup">Sign Up</Link>
             </Button>
           </HeaderNavigation>
         </div>
