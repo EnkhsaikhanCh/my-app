@@ -8,11 +8,7 @@ import { protectedProcedure, router } from "../trpc";
 export const todoRouter = router({
   getAll: protectedProcedure.query(async ({ ctx }) =>
     ctx.db
-      .select({
-        id: todos.id,
-        title: todos.title,
-        completed: todos.completed,
-      })
+      .select()
       .from(todos)
       .where(eq(todos.createdBy, ctx.session.user.id))
       .orderBy(todos.createdAt),

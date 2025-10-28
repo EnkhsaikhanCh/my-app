@@ -4,6 +4,7 @@ import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { toast } from "sonner";
+import superjson from "superjson";
 
 import type { AppRouter } from "@/server/trpc";
 
@@ -27,6 +28,7 @@ const trpcClient = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
       url: "/api/trpc",
+      transformer: superjson,
       fetch(url, options) {
         return fetch(url, {
           ...options,
